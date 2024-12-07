@@ -1,0 +1,331 @@
+--------------------  Core php - Assignment 2  ----------------
+
+1) PHP Syntax.
+- The script starts with <?php and ends with ?>. 
+- These tags are also called ‘Canonical PHP tags’. 
+- The open and closing tags are called delimiters. 
+- Every PHP command ends with a semi-colon (;).
+<?php
+    // code
+?>
+
+2) (i) Discuss the structure of a PHP script and how to embed PHP in HTML.
+- -The script starts with <?php and ends with ?>. 
+- Every PHP command ends with a semi-colon (;).
+<?php
+    // code
+    echo "Hello, world!";
+?>
+- You can mix PHP with HTML. The HTML structure remains the same, but PHP is embedded wherever you need dynamic content.
+- You can embed PHP code in HTML by placing PHP tags within the HTML code. 
+- PHP will execute the code inside the PHP tags, and the result will be inserted into the HTML output.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PHP Syntax Example</title>
+</head>
+<body>
+    <h1><?php echo "Hello, PHP!"; ?></h1>
+</body>
+</html>
+
+(ii) What are the rules for naming variables in PHP?
+- Every variable in PHP must start with a dollar sign ($).
+  ex. $variableName = "Hello, world!";
+
+-> Valid Characters:
+- Variables can comprise letters (a-z, A-Z), numbers (0-9), and underscores (_).
+- The variable name cannot start with a digit, though it can contain digits after the first character.
+$var1 = 10;      // Valid
+$1var = 10;      // Invalid, cannot start with a number
+$var_name = 20;  // Valid
+
+-> Case Sensitivity :
+- PHP variable names are case-sensitive. This means $variable and $Variable are considered different variables.
+
+-> No Reserved Keywords :
+- You cannot use PHP reserved keywords or language constructs as variable names. These include keywords like echo, class, function, if, else, while, etc.
+
+-> Descriptive and Meaningful:
+-  descriptive and meaningful names that convey the purpose or content of the variable.
+- Utilize camelCase or snake_case conventions for multi-word variable names, maintaining consistency within your code.
+
+3) Explain the concept of variables in PHP and their scope.
+- The scope of a variable refers to where it can be accessed within the code. 
+- PHP variables can have local, global, static, or superglobal scope.
+
+1. Local Scope or Local Variable :
+- Variables declared within a function have local scope and cannot be accessed outside the function. 
+- Any declaration of a variable outside the function with the same name (as within the function) is a completely different variable.
+
+2. Global Scope or Global Variable :
+- The variables declared outside a function are called global variables. 
+- These variables can be accessed directly outside a function. 
+- To get access within a function we need to use the “global” keyword before the variable to refer to the global variable.
+
+3. Static Variables :
+- It is the characteristic of PHP to delete the variable. 
+- Once it completes its execution and the memory is freed. 
+- But sometimes we need to store the variables even after the completion of function execution. 
+- To do this, we use the static keywords and the variables are then called static variables. 
+- PHP associates a data type depending on the value for the variable.
+
+4. Superglobals :
+- Superglobals are built-in arrays in PHP that are accessible from anywhere in the script, including within functions. 
+- Common superglobals include $_GET, $_POST, $_SESSION, $_COOKIE, $_SERVER, and $_GLOBALS.
+
+4) What are super global variables in PHP? List at least five super global arrays and their use.
+- These are specially-defined array variables in PHP that make it easy for you to get information about a request or its context. 
+- The superglobals are available throughout your script. 
+- These variables can be accessed from any function, class or any file without doing any special task such as declaring any global variable etc. 
+- They are mainly used to store and get information from one page to another etc in an application. 
+
+(i) $GLOBALS : It is a superglobal variable which is used to access global variables from anywhere in the PHP script. PHP stores all the global variables in array $GLOBALS[] where index holds the global variable name, which can be accessed.
+ex. <?php
+$x = 300;
+$y = 200;
+ 
+function multiplication(){
+    $GLOBALS['z'] = $GLOBALS['x'] * $GLOBALS['y'];
+}
+ 
+multiplication();
+echo $z;
+?>
+output : 60000
+
+(ii) $_SERVER : 
+- It is a PHP super global variable that stores the information about headers, paths and script locations. 
+- Some of these elements are used to get the information from the superglobal variable $_SERVER.
+ex. <?php
+echo $_SERVER['PHP_SELF'];
+echo "<br>";
+echo $_SERVER['SERVER_NAME'];
+echo "<br>";
+?> 
+output : /aa1/index.php
+localhost
+
+(iii) $_REQUEST : 
+- It is a superglobal variable which is used to collect the data after submitting a HTML form. 
+- $_REQUEST is not used mostly, because $_POST and $_GET perform the same task and are widely used.
+ex.
+<!DOCTYPE html>
+<html>
+<body>
+ 
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+ NAME: <input type="text" name="fname">
+ <button type="submit">SUBMIT</button>
+</form>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = htmlspecialchars($_REQUEST['fname']);
+    if(empty($name)){
+        echo "Name is empty";
+    } else {
+        echo $name;
+    }
+}
+?>
+</body>
+</html>
+
+output :
+enter name : twinkle submit
+--> twinkle
+
+(iiii) $_POST : 
+- It is a super global variable used to collect data from the HTML form after submitting it. 
+- When form uses method post to transfer data, the data is not visible in the query string, because of which security levels are maintained in this method.
+
+(iv) $_GET : 
+- $_GET is a super global variable used to collect data from the HTML form after submitting it. 
+When form uses method get to transfer data, the data is visible in the query string, therefore the values are not hidden. 
+- $_GET super global array variable stores the values that come in the URL.
+
+5) Explain how conditional statements work in PHP.
+- Conditional statements in PHP allow you to control the flow of your program based on certain conditions. 
+- These conditions evaluate to true or false, and PHP executes specific blocks of code depending on the result of the evaluation.
+- PHP provides several types of conditional statements, including if, else, elseif, switch, and ternary.
+
+1. if Statement
+The if statement is used to execute a block of code if a condition is true.
+
+ex. $age = 20;
+
+if ($age >= 18) {
+    echo "You are an adult.";
+}
+
+2. else Statement
+- The else statement is used to execute a block of code if the condition in the if statement is false.
+ex. $age = 16;
+
+if ($age >= 18) {
+    echo "You are an adult.";
+} else {
+    echo "You are a minor.";
+}
+
+3. elseif Statement
+- The elseif statement allows you to test multiple conditions. 
+- It is used when you need to check for different possibilities in a series of conditions.
+ex. $score = 85;
+
+if ($score >= 90) {
+    echo "Grade: A";
+} elseif ($score >= 75) {
+    echo "Grade: B";
+} elseif ($score >= 60) {
+    echo "Grade: C";
+} else {
+    echo "Grade: F";
+}
+
+4. switch Statement
+- The switch statement is a more efficient way to evaluate multiple conditions based on a single variable. 
+- It compares a variable’s value to multiple possible cases and executes the corresponding code block.
+ex. $day = "Wednesday";
+
+switch ($day) {
+    case "Monday":
+        echo "Start of the workweek.";
+        break;
+    case "Wednesday":
+        echo "Midweek!";
+        break;
+    case "Friday":
+        echo "TGIF!";
+        break;
+    default:
+        echo "Enjoy your day!";
+}
+
+5. Ternary Operator
+- The ternary operator is a shorthand version of the if-else statement. 
+- It is useful for simple conditions and assignments.
+ex. $age = 20;
+
+echo ($age >= 18) ? "You are an adult." : "You are a minor.";
+
+6) Discuss the difference between for loop, foreach loop, and do-while loop in PHP.
+(i) For loop -
+- use : Iterating a specific number of times or when the number of iterations is known.
+- condition check : Condition is checked before each iteration.
+- loop execution guarantee : Executes only if the condition is true.
+- typical use case : For counting, or when you know the exact number of iterations.
+- ex : Loop through numbers, range-based iterations.
+
+(ii) Foreach loop -
+- use : Iterating over arrays or objects (key-value pairs).
+- condition check : Iterates over all elements in the array or object, no condition check before each iteration.
+- loop execution guarantee : Always executes for each element in the array.
+- typical use case : For iterating through arrays or collections.
+- ex : Loop through elements of an array or object.
+
+(iii) do-while loop -
+- use : Ensuring that a block of code runs at least once.
+- condition check : Condition is checked after the loop body.
+- loop execution guarantee : Executes at least once, even if the condition is false.
+- typical use case : When you want the code to run at least once (e.g., menu options).
+- ex : Collect user input, menu-driven operations.
+
+7) Define arrays in PHP. What are the different types of arrays.
+- An array in PHP is a variable that can store multiple values. 
+- Arrays in PHP are a type of data structure that allows us to store multiple elements of similar or different data types.
+- The arrays are helpful to create a list of elements of similar types, which can be accessed using their index or key.
+
+(i) Indexed or Numeric Arrays: 
+- An array with a numeric index where values are stored linearly.
+(ii) Associative Arrays: 
+- An array with a string index where instead of linear storage, each value can be assigned a specific key.
+(iii) Multidimensional Arrays: 
+- An array that contains a single or multiple arrays within it and can be accessed via multiple indices.
+
+8) What is the header function in PHP and how is it used.
+- The header() function in PHP is used to send a raw HTTP header to the browser. 
+- HTTP headers provide essential information about the response sent from the server to the client (browser). 
+- The header() function allows you to modify these headers before any output is sent to the browser, such as redirecting to a different page, setting content type, or enabling file downloads.
+- syntax : header("Header-Type: Header-Value");
+"Header-Type": Specifies the type of header you want to send.
+"Header-Value": Specifies the value of the header.
+
+9) Explain the difference between include and require in PHP.
+- In PHP, both include and require are used to include external files into a script, but there are key differences between them, especially in how they handle errors.
+(i) include : 
+- The include statement is used to include and evaluate a specified file. 
+- If the file is not found or there is an error in the included file, PHP will generate a warning but the script will continue to execute.
+- Generates a warning on failure but the script continues.
+- Used when the file is optional.
+- The script continues even after a failed include.
+- Slightly slower due to the warning generated on failure.
+
+(ii) require :
+- The require statement is used to include and evaluate a specified file. 
+- However, unlike include, if the file is not found or there is an error in the included file, PHP will generate a fatal error and halt the execution of the script.
+- Generates a fatal error and stops the script.
+- Used when the file is essential to the script.
+- The script stops immediately on failure.
+- Same as include, but with stronger error handling.
+
+10) Explain what PHP expressions are and give examples of arithmetic and logical
+operations.
+- An expression in PHP is any valid combination of variables, constants, operators, and functions that can be evaluated to produce a result. 
+- Expressions are used to perform calculations, manipulate data, and control program flow.
+
+(i) Arithmetic Expressions in PHP :
+- Arithmetic expressions are used to perform mathematical operations on numbers. 
+- PHP supports the usual arithmetic operators such as addition, subtraction, multiplication, division, modulus, etc.
+
+- ex.
+ <?php
+$a = 10;
+$b = 5;
+
+// Addition
+$result = $a + $b;
+echo "$a + $b = $result\n";  // Output: 10 + 5 = 15
+
+// Subtraction
+$result = $a - $b;
+echo "$a - $b = $result\n";  // Output: 10 - 5 = 5
+?>
+
+(ii) Logical Expressions in PHP :
+- Logical expressions are used to perform logical operations that return a boolean result (either true or false). 
+- These are often used in control structures like if, while, and for loops to evaluate conditions.
+
+- ex.
+<?php
+$a = 10;
+$b = 5;
+$c = 10;
+
+// Using AND (&&)
+$result = ($a > $b) && ($a == $c);
+echo "($a > $b) && ($a == $c) = $result\n";  // Output: 1 (true)
+
+// Using OR (||)
+$result = ($a > $b) || ($a < $c);
+echo "($a > $b) || ($a < $c) = $result\n";  // Output: 1 (true)
+
+// Using NOT (!)
+$result = !($a < $b);
+echo "!($a < $b) = $result\n";  // Output: 1 (true)
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
